@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audiencia Fiscal Especializado - 419 Vacantes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F0F2F5;color:#1a1a1a;min-height:100vh}
+.header{background:#1C3557;color:white;padding:16px 20px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.18)}
+.header-title{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#A8D4FF;margin-bottom:2px}
+.header-sub{font-size:10px;color:rgba(255,255,255,.45);margin-bottom:12px}
+.stats-row{display:flex;gap:8px;margin-bottom:10px}
+.stat-box{flex:1;background:rgba(255,255,255,.1);border-radius:8px;padding:6px 10px;text-align:center;border:1px solid rgba(255,255,255,.15)}
+.sl{font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);display:block;margin-bottom:1px}
+.sv{font-size:19px;font-weight:700}
+.sv.red{color:#FF7575}.sv.grn{color:#A3D977}.sv.wht{color:#fff}.sv.yel{color:#FFD166}
+.prog-track{height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:#A3D977;border-radius:2px;transition:width .3s ease;width:0%}
+.toolbar{max-width:860px;margin:14px auto 8px;padding:0 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search-input{flex:1;min-width:160px;padding:9px 12px;border-radius:8px;border:1.5px solid #D0D5DD;background:white;font-size:13px;font-family:inherit;color:#1a1a1a;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:#1C3557}
+.filter-btns{display:flex;gap:5px;flex-wrap:wrap}
+.fbtn{padding:7px 12px;border-radius:7px;border:1.5px solid #D0D5DD;background:white;font-size:11px;font-family:inherit;color:#666;cursor:pointer;white-space:nowrap;transition:all .15s}
+.fbtn.active,.fbtn:hover{background:#1C3557;color:white;border-color:#1C3557}
+.btn-reset{padding:9px 14px;border-radius:8px;border:1.5px solid #D0D5DD;background:white;font-size:12px;font-family:inherit;color:#666;cursor:pointer;white-space:nowrap;transition:all .15s}
+.btn-reset:hover{border-color:#e53e3e;color:#e53e3e}
+.btn-save{padding:9px 14px;border-radius:8px;border:1.5px solid #A3D977;background:#f0fff0;font-size:12px;font-family:inherit;color:#27ae60;cursor:pointer;white-space:nowrap;transition:all .15s;font-weight:600}
+.btn-save:hover{background:#A3D977;color:#1a3300}
+.btn-save.saved{background:#A3D977;color:#1a3300;border-color:#7bbf40}
+.btn-export{padding:9px 14px;border-radius:8px;border:1.5px solid #A8D4FF;background:#f0f8ff;font-size:12px;font-family:inherit;color:#1C3557;cursor:pointer;white-space:nowrap;transition:all .15s}
+.btn-export:hover{background:#A8D4FF;color:#1C3557}
+.btn-import{padding:9px 14px;border-radius:8px;border:1.5px solid #FFD166;background:#fffbf0;font-size:12px;font-family:inherit;color:#9a6f00;cursor:pointer;white-space:nowrap;transition:all .15s;display:inline-block}
+.btn-import:hover{background:#FFD166;color:#5a3f00}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1C3557;color:white;padding:10px 22px;border-radius:10px;font-size:13px;font-family:inherit;opacity:0;transition:all .3s;pointer-events:none;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:#27ae60}
+.toast.err{background:#e53e3e}
+.autosave-indicator{font-size:10px;color:rgba(255,255,255,.4);text-align:right;padding:2px 0 0;letter-spacing:.05em}
+.list-wrap{max-width:860px;margin:0 auto;padding:0 14px 60px}
+.grupo{margin-bottom:8px;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.grupo-header{background:#1C3557;color:#A8D4FF;padding:9px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.grupo-header:hover{background:#1a3050}
+.grupo-badge{background:rgba(255,255,255,.15);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.grupo-badge.completo{background:#A3D977;color:#1a3300}
+.dep-row{background:white;border-bottom:1px solid #F0F2F5;padding:9px 14px;display:flex;align-items:center;gap:10px;transition:background .15s}
+.dep-row:last-child{border-bottom:none}
+.dep-row.tomada{background:#FFF5F5;opacity:.6}
+.dep-row.tomada .dep-name{text-decoration:line-through;color:#AAB0BA}
+.dep-row.hidden{display:none}
+.grupo.hidden{display:none}
+.dep-dot{width:7px;height:7px;border-radius:50%;background:#A3D977;flex-shrink:0;transition:background .2s}
+.tomada .dep-dot{background:#e53e3e}
+.dep-name{flex:1;font-size:12px;font-weight:500;color:#1a1a1a}
+.dep-cant{font-size:11px;color:#8A94A0;min-width:40px;text-align:center}
+.dep-restantes{font-size:14px;font-weight:700;min-width:32px;text-align:center;color:#1C3557;font-variant-numeric:tabular-nums}
+.dep-restantes.cero{color:#e53e3e}
+.ctrl{display:flex;align-items:center;background:#F0F2F5;border-radius:8px;border:1.5px solid #D8DCE2;overflow:hidden;flex-shrink:0}
+.cbtn{width:32px;height:32px;border:none;background:transparent;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#444;transition:background .12s,color .12s;line-height:1}
+.cbtn:disabled{opacity:.2;cursor:not-allowed}
+.cbtn.m:not(:disabled):hover,.cbtn.m:not(:disabled):active{background:#FFE5E5;color:#C0392B}
+.cbtn.p:not(:disabled):hover,.cbtn.p:not(:disabled):active{background:#E5F5E0;color:#27AE60}
+.csep{width:1px;height:20px;background:#D8DCE2;flex-shrink:0}
+.empty-msg{text-align:center;color:#8A94A0;padding:40px;font-size:13px;display:none}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-title">Audiencia Fiscal Delegado Especializado</div>
+  <div class="header-sub">OPECE No. I-102-M-01-(419) - Concurso Meritos FGN 2024 - 19 mayo 2026</div>
+  <div class="stats-row">
+    <div class="stat-box"><span class="sl">Total</span><span class="sv wht" id="s-total">419</span></div>
+    <div class="stat-box"><span class="sl">Tomadas</span><span class="sv red" id="s-tom">0</span></div>
+    <div class="stat-box"><span class="sl">Disponibles</span><span class="sv grn" id="s-disp">419</span></div>
+    <div class="stat-box"><span class="sl">Grupos completos</span><span class="sv yel" id="s-gc">0</span></div>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+  <div class="autosave-indicator" id="autosave-lbl">&#10003; Guardado automático activo</div>
+</div>
+<div class="toolbar">
+  <input class="search-input" id="buscar" type="text" placeholder="Buscar seccional o dependencia..." oninput="filtrar()">
+  <div class="filter-btns">
+    <button class="fbtn active" onclick="setF('todas',this)">Todas</button>
+    <button class="fbtn" onclick="setF('disp',this)">Disponibles</button>
+    <button class="fbtn" onclick="setF('tom',this)">Tomadas</button>
+  </div>
+  <button class="btn-reset" onclick="resetear()">&#8635; Reiniciar</button>
+  <button class="btn-save" onclick="guardarManual()" id="btn-guardar">&#128190; Guardar</button>
+  <button class="btn-export" onclick="exportar()">&#8681; Exportar</button>
+  <label class="btn-import" title="Cargar respaldo">&#8679; Importar<input type="file" accept=".json" onchange="importar(event)" style="display:none"></label>
+</div>
+<div id="toast" class="toast"></div>
+<div class="list-wrap"><div id="lista"></div><p class="empty-msg" id="vacio">No se encontraron resultados.</p></div>
+<script>
+var TOTAL=419;
+var filtro="todas";
+var DATOS=[
+  {s:"Nivel Central - Antioquia",deps:[{d:"Dir. Justicia Transicional",t:2},{d:"Dir. Narcotrafico",t:1},{d:"Dir. Corrupcion",t:1},{d:"Dir. Org. Criminales",t:5},{d:"Dir. Violaciones DD.HH.",t:12},{d:"Dir. Delitos Informaticos",t:2},{d:"Dir. Recursos Naturales",t:3}]},
+  {s:"Nivel Central - Arauca",deps:[{d:"Dir. Org. Criminales",t:2}]},
+  {s:"Nivel Central - Atlantico",deps:[{d:"Dir. Justicia Transicional",t:1},{d:"Dir. Narcotrafico",t:1},{d:"Dir. Corrupcion",t:2},{d:"Dir. Org. Criminales",t:3},{d:"Dir. Violaciones DD.HH.",t:1},{d:"Dir. Delitos Informaticos",t:2},{d:"Dir. Extincion Derecho Dominio",t:2},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Bogota",deps:[{d:"Delegada Criminalidad Organizada",t:1},{d:"Delegada Seguridad Territorial",t:1},{d:"Delegada Finanzas Criminales",t:4},{d:"Dir. Justicia Transicional",t:9},{d:"Dir. Lavado de Activos",t:15},{d:"Dir. Narcotrafico",t:3},{d:"Dir. Corrupcion",t:6},{d:"Dir. Org. Criminales",t:13},{d:"Dir. Violaciones DD.HH.",t:16},{d:"Dir. Delitos Fiscales",t:14},{d:"Dir. Delitos Informaticos",t:9},{d:"Dir. Extincion Derecho Dominio",t:24},{d:"Dir. Recursos Naturales",t:1},{d:"Fiscalia ante Corte Suprema",t:9},{d:"Unidad NNA Priorizados",t:1},{d:"Unidad Desmantelamiento Org.",t:1}]},
+  {s:"Nivel Central - Bolivar",deps:[{d:"Dir. Justicia Transicional",t:1},{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:4},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Boyaca",deps:[{d:"Dir. Corrupcion",t:1},{d:"Dir. Org. Criminales",t:1},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Caldas",deps:[{d:"Dir. Org. Criminales",t:1}]},
+  {s:"Nivel Central - Cali",deps:[{d:"Dir. Lavado de Activos",t:1},{d:"Dir. Delitos Fiscales",t:1},{d:"Dir. Extincion Derecho Dominio",t:1}]},
+  {s:"Nivel Central - Caqueta",deps:[{d:"Dir. Org. Criminales",t:2},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Casanare",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Violaciones DD.HH.",t:1}]},
+  {s:"Nivel Central - Cauca",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:2},{d:"Dir. Recursos Naturales",t:2},{d:"Unidad Desmantelamiento Org.",t:1}]},
+  {s:"Nivel Central - Cesar",deps:[{d:"Dir. Justicia Transicional",t:1},{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:2},{d:"Dir. Violaciones DD.HH.",t:1},{d:"Dir. Delitos Informaticos",t:1}]},
+  {s:"Nivel Central - Choco",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:3}]},
+  {s:"Nivel Central - Cordoba",deps:[{d:"Dir. Justicia Transicional",t:2},{d:"Dir. Org. Criminales",t:1},{d:"Dir. Violaciones DD.HH.",t:1}]},
+  {s:"Nivel Central - Guajira",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:2}]},
+  {s:"Nivel Central - Guaviare",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Recursos Naturales",t:2}]},
+  {s:"Nivel Central - Huila",deps:[{d:"Dir. Corrupcion",t:1},{d:"Dir. Org. Criminales",t:2}]},
+  {s:"Nivel Central - Magdalena",deps:[{d:"Dir. Justicia Transicional",t:1},{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:5},{d:"Dir. Violaciones DD.HH.",t:4},{d:"Dir. Recursos Naturales",t:2}]},
+  {s:"Nivel Central - Medellin",deps:[{d:"Dir. Lavado de Activos",t:1},{d:"Dir. Extincion Derecho Dominio",t:2}]},
+  {s:"Nivel Central - Meta",deps:[{d:"Dir. Corrupcion",t:2},{d:"Dir. Org. Criminales",t:6},{d:"Dir. Violaciones DD.HH.",t:6},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Narino",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:4},{d:"Dir. Violaciones DD.HH.",t:2},{d:"Dir. Delitos Informaticos",t:1},{d:"Dir. Recursos Naturales",t:1},{d:"Unidad Desmantelamiento Org.",t:2}]},
+  {s:"Nivel Central - Norte de Santander",deps:[{d:"Dir. Org. Criminales",t:3},{d:"Dir. Violaciones DD.HH.",t:2},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Putumayo",deps:[{d:"Dir. Org. Criminales",t:2}]},
+  {s:"Nivel Central - Quindio",deps:[{d:"Dir. Narcotrafico",t:1}]},
+  {s:"Nivel Central - Risaralda",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:3},{d:"Dir. Violaciones DD.HH.",t:1},{d:"Dir. Delitos Informaticos",t:1},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Santander",deps:[{d:"Dir. Justicia Transicional",t:1},{d:"Dir. Narcotrafico",t:2},{d:"Dir. Corrupcion",t:1},{d:"Dir. Org. Criminales",t:3},{d:"Dir. Violaciones DD.HH.",t:1},{d:"Dir. Delitos Informaticos",t:1},{d:"Dir. Recursos Naturales",t:3}]},
+  {s:"Nivel Central - Sucre",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:1}]},
+  {s:"Nivel Central - Tolima",deps:[{d:"Dir. Narcotrafico",t:1},{d:"Dir. Corrupcion",t:2},{d:"Dir. Org. Criminales",t:2},{d:"Dir. Recursos Naturales",t:1}]},
+  {s:"Nivel Central - Valle del Cauca",deps:[{d:"Dir. Justicia Transicional",t:2},{d:"Dir. Narcotrafico",t:1},{d:"Dir. Org. Criminales",t:6},{d:"Dir. Violaciones DD.HH.",t:3},{d:"Dir. Delitos Informaticos",t:1}]},
+  {s:"Norte de Santander",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:2}]},
+  {s:"Quindio",deps:[{d:"Delegada Seguridad Territorial",t:1},{d:"Dir. Seccional",t:1}]},
+  {s:"Risaralda",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:1}]},
+  {s:"Santander",deps:[{d:"Dir. Seccional",t:4}]},
+  {s:"Sucre",deps:[{d:"Dir. Seccional",t:1}]},
+  {s:"Tolima",deps:[{d:"Dir. Seccional",t:1}]},
+  {s:"Valle del Cauca",deps:[{d:"Dir. Apoyo Territorial",t:2},{d:"Dir. Seccional",t:5}]},
+  {s:"Vichada",deps:[{d:"Dir. Apoyo Territorial",t:1}]},
+  {s:"Antioquia",deps:[{d:"Dir. Seccional",t:9}]},
+  {s:"Arauca",deps:[{d:"Dir. Seccional",t:1}]},
+  {s:"Atlantico",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:2}]},
+  {s:"Bogota",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:26}]},
+  {s:"Bolivar",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:1}]},
+  {s:"Boyaca",deps:[{d:"Dir. Seccional",t:1}]},
+  {s:"Cali",deps:[{d:"Dir. Seccional",t:8}]},
+  {s:"Caqueta",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:1}]},
+  {s:"Casanare",deps:[{d:"Dir. Apoyo Territorial",t:1}]},
+  {s:"Cauca",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:4}]},
+  {s:"Cesar",deps:[{d:"Dir. Apoyo Territorial",t:1}]},
+  {s:"Choco",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:3}]},
+  {s:"Cordoba",deps:[{d:"Dir. Seccional",t:1}]},
+  {s:"Cundinamarca",deps:[{d:"Dir. Apoyo Territorial",t:2},{d:"Dir. Seccional",t:4}]},
+  {s:"Guajira",deps:[{d:"Dir. Seccional",t:2}]},
+  {s:"Huila",deps:[{d:"Dir. Seccional",t:1}]},
+  {s:"Medellin",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:7}]},
+  {s:"Meta",deps:[{d:"Dir. Apoyo Territorial",t:2},{d:"Dir. Seccional",t:3}]},
+  {s:"Narino",deps:[{d:"Dir. Apoyo Territorial",t:1},{d:"Dir. Seccional",t:3}]}
+];
+var estado={};
+DATOS.forEach(function(s){s.deps.forEach(function(d){estado[s.s+"||"+d.d]=0;});});
+
+// ── Cargar guardado automático al iniciar ────────────────────
+var SAVE_KEY="fgn419_estado_v1";
+(function initLoad(){
+  try{
+    var raw=localStorage.getItem(SAVE_KEY);
+    if(!raw)return;
+    var saved=JSON.parse(raw);
+    Object.keys(saved).forEach(function(k){if(estado.hasOwnProperty(k))estado[k]=saved[k];});
+  }catch(e){}
+})();
+
+function render(){
+  var lista=document.getElementById("lista");
+  lista.innerHTML="";
+  var totTom=0,gcComp=0;
+  DATOS.forEach(function(s,si){
+    var tomSec=s.deps.reduce(function(a,d){return a+estado[s.s+"||"+d.d];},0);
+    var totalSec=s.deps.reduce(function(a,d){return a+d.t;},0);
+    totTom+=tomSec;
+    if(tomSec>=totalSec&&totalSec>0)gcComp++;
+    var g=document.createElement("div");
+    g.className="grupo";g.id="g"+si;
+    var badge=tomSec+"/"+totalSec;
+    var bc=tomSec>=totalSec&&totalSec>0?" completo":"";
+    g.innerHTML='<div class="grupo-header" onclick="toggleGrupo('+si+')"><span>'+s.s+'</span><span class="grupo-badge'+bc+'" id="gb'+si+'">'+badge+'</span></div><div id="gd'+si+'">';
+    s.deps.forEach(function(dep,di){
+      var key=s.s+"||"+dep.d;
+      var tom=estado[key];
+      var rest=dep.t-tom;
+      g.innerHTML+='<div class="dep-row'+(rest===0?" tomada":"")+'" id="r'+si+'_'+di+'">'
+        +'<div class="dep-dot"></div>'
+        +'<div class="dep-name">'+dep.d+'</div>'
+        +'<div class="dep-cant">'+dep.t+' emp.</div>'
+        +'<div class="ctrl">'
+        +'<button class="cbtn m" onclick="cambiar('+si+','+di+',1)"'+(rest===0?" disabled":"")+'>&#8722;</button>'
+        +'<div class="csep"></div>'
+        +'<span class="dep-restantes'+(rest===0?" cero":"")+'" id="v'+si+'_'+di+'">'+rest+'</span>'
+        +'<div class="csep"></div>'
+        +'<button class="cbtn p" onclick="cambiar('+si+','+di+',-1)"'+(tom===0?" disabled":"")+'>+</button>'
+        +'</div></div>';
+    });
+    g.innerHTML+='</div>';
+    lista.appendChild(g);
+  });
+  document.getElementById("s-tom").textContent=totTom;
+  document.getElementById("s-disp").textContent=TOTAL-totTom;
+  document.getElementById("s-gc").textContent=gcComp;
+  document.getElementById("prog").style.width=Math.round(totTom/TOTAL*100)+"%";
+  filtrar();
+}
+
+function cambiar(si,di,delta){
+  var s=DATOS[si];var dep=s.deps[di];
+  var key=s.s+"||"+dep.d;
+  var nuevo=estado[key]+delta;
+  if(nuevo<0||nuevo>dep.t)return;
+  estado[key]=nuevo;
+  var rest=dep.t-nuevo;
+  var row=document.getElementById("r"+si+"_"+di);
+  row.className="dep-row"+(rest===0?" tomada":"");
+  var vEl=document.getElementById("v"+si+"_"+di);
+  vEl.textContent=rest;
+  vEl.className="dep-restantes"+(rest===0?" cero":"");
+  var btns=row.querySelectorAll(".cbtn");
+  btns[0].disabled=rest===0;btns[1].disabled=nuevo===0;
+  var tomSec=s.deps.reduce(function(a,d){return a+estado[s.s+"||"+d.d];},0);
+  var totalSec=s.deps.reduce(function(a,d){return a+d.t;},0);
+  var gb=document.getElementById("gb"+si);
+  gb.textContent=tomSec+"/"+totalSec;
+  gb.className="grupo-badge"+(tomSec>=totalSec?" completo":"");
+  var totTom=0,gcComp=0;
+  DATOS.forEach(function(sx){
+    var t=sx.deps.reduce(function(a,d){return a+estado[sx.s+"||"+d.d];},0);
+    var ts=sx.deps.reduce(function(a,d){return a+d.t;},0);
+    totTom+=t;if(t>=ts&&ts>0)gcComp++;
+  });
+  document.getElementById("s-tom").textContent=totTom;
+  document.getElementById("s-disp").textContent=TOTAL-totTom;
+  document.getElementById("s-gc").textContent=gcComp;
+  document.getElementById("prog").style.width=Math.round(totTom/TOTAL*100)+"%";
+  filtrar();
+  guardar();
+}
+
+function toggleGrupo(si){
+  var gd=document.getElementById("gd"+si);
+  gd.style.display=gd.style.display==="none"?"":"none";
+}
+
+function setF(f,btn){
+  filtro=f;
+  document.querySelectorAll(".fbtn").forEach(function(b){b.classList.remove("active");});
+  btn.classList.add("active");filtrar();
+}
+
+function filtrar(){
+  var q=document.getElementById("buscar").value.toLowerCase().trim();
+  var vis=0;
+  DATOS.forEach(function(s,si){
+    var g=document.getElementById("g"+si);if(!g)return;
+    var secMatch=s.s.toLowerCase().indexOf(q)!==-1;
+    var anyVis=false;
+    s.deps.forEach(function(dep,di){
+      var row=document.getElementById("r"+si+"_"+di);if(!row)return;
+      var key=s.s+"||"+dep.d;
+      var tom=estado[key]>0;
+      var rest=dep.t-estado[key];
+      var dMatch=secMatch||dep.d.toLowerCase().indexOf(q)!==-1;
+      var fOk=filtro==="todas"||(filtro==="tom"&&rest===0)||(filtro==="disp"&&rest>0);
+      if(dMatch&&fOk){row.classList.remove("hidden");anyVis=true;}
+      else row.classList.add("hidden");
+    });
+    if(anyVis){g.classList.remove("hidden");vis++;}
+    else g.classList.add("hidden");
+  });
+  document.getElementById("vacio").style.display=vis===0?"block":"none";
+}
+
+var toastTimer=null;
+
+function mostrarToast(msg,tipo){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.className="toast "+(tipo||"");
+  void t.offsetWidth;t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove("show");},2500);
+}
+
+function guardar(){
+  try{
+    localStorage.setItem(SAVE_KEY,JSON.stringify(estado));
+    var lbl=document.getElementById("autosave-lbl");
+    if(lbl){var d=new Date();lbl.textContent="✓ Guardado "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0");}
+  }catch(e){}
+}
+
+function guardarManual(){
+  guardar();
+  mostrarToast("✓ Progreso guardado correctamente","ok");
+  var b=document.getElementById("btn-guardar");
+  b.classList.add("saved");
+  setTimeout(function(){b.classList.remove("saved");},1500);
+}
+
+function cargarGuardado(){
+  try{
+    var raw=localStorage.getItem(SAVE_KEY);
+    if(!raw)return;
+    var saved=JSON.parse(raw);
+    var keys=Object.keys(saved);var loaded=0;
+    keys.forEach(function(k){if(estado.hasOwnProperty(k)){estado[k]=saved[k];loaded++;}});
+    if(loaded>0)mostrarToast("✓ Progreso anterior restaurado ("+loaded+" entradas)","ok");
+  }catch(e){}
+}
+
+function exportar(){
+  try{
+    var data={version:1,fecha:new Date().toISOString(),estado:estado};
+    var blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    var d=new Date();
+    a.href=url;a.download="fgn419_respaldo_"+d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+"_"+String(d.getHours()).padStart(2,"0")+String(d.getMinutes()).padStart(2,"0")+".json";
+    a.click();URL.revokeObjectURL(url);
+    mostrarToast("✓ Respaldo exportado correctamente","ok");
+  }catch(e){mostrarToast("Error al exportar","err");}
+}
+
+function importar(e){
+  var file=e.target.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      var data=JSON.parse(ev.target.result);
+      var src=data.estado||data;
+      var keys=Object.keys(src);var loaded=0;
+      keys.forEach(function(k){if(estado.hasOwnProperty(k)){estado[k]=src[k];loaded++;}});
+      guardar();render();
+      mostrarToast("✓ Respaldo importado: "+loaded+" entradas restauradas","ok");
+    }catch(ex){mostrarToast("Error: archivo no válido","err");}
+    e.target.value="";
+  };
+  reader.readAsText(file);
+}
+
+function resetear(){
+  if(!confirm("¿Reiniciar TODOS los conteos? Esta acción también borrará el guardado automático."))return;
+  DATOS.forEach(function(s){s.deps.forEach(function(d){estado[s.s+"||"+d.d]=0;});});
+  localStorage.removeItem(SAVE_KEY);
+  render();mostrarToast("Conteos reiniciados","");
+}
+
+render();
+</script>
+</body>
+</html>
